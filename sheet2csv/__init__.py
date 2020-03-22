@@ -62,7 +62,7 @@ def sheet2csv_rotate(id, range, api_key, key_prefix="", key_cols=[1], filename="
 
         for idx in key_cols:
             town = row[idx].lower().replace(" ", "_").split('/')[0]
-            key_parts.append()
+            key_parts.append(town)
         
         return '.'.join(key_parts)
 
