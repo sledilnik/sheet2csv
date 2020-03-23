@@ -140,7 +140,7 @@ def sheet2csv(id, range, api_key, filename="export.csv"):
             # pad each row with empty values
             row += [""] * (len(cols) - len(row))
 
-            if len(row[0]) == 0:
+            if len(str(row[0])) == 0:
                 break
 
             csvrow = []
