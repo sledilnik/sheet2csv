@@ -60,7 +60,7 @@ def get_keys(key_mapper, values):
     else:
         return values[0], values[1:]
 
-def sheet2dict(id, range, api_key, rotate=False, key_mapper=None):
+def sheet2dict(id, range, api_key, rotate=False, key_mapper=None, sort_keys=False):
 
     if rotate:
         majorDimension = 'COLUMNS'
@@ -86,11 +86,15 @@ def sheet2dict(id, range, api_key, rotate=False, key_mapper=None):
                 raise e
         dicts.append(x)
 
-    return list(filter(lambda val: len(str(val)) > 0, keys)), dicts
+    keys_sorted = list(filter(lambda val: len(str(val)) > 0, keys))
+    if sort_keys:
+        keys_sorted.sort()
 
-def sheet2csv2(id, range, api_key, rotate=False, key_mapper=None, filename="export.csv"):
+    return keys_sorted, dicts
 
-    fieldnames, csvdata = sheet2dict(id, range, api_key, rotate, key_mapper)
+def sheet2csv2(id, range, api_key, rotate=False, key_mapper=None, sort_keys=False, filename="export.csv"):
+
+    fieldnames, csvdata = sheet2dict(id=id, range=range, api_key=api_key, rotate=rotate, key_mapper=key_mapper, sort_keys=sort_keys)
 
     with open(filename, "w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
