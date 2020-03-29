@@ -41,8 +41,64 @@ def find_duplicates(l):
     # stupid but simple
     return set([x for x in l if l.count(x) > 1])
 
+
+def fetch_sheet(id, range, api_key, majorDimension='ROWS'):
+
+    service = build("sheets", "v4", developerKey=api_key)
+    sheet = service.spreadsheets()
+
+    result = sheet.values().get(spreadsheetId=id, range=range, valueRenderOption='UNFORMATTED_VALUE', majorDimension=majorDimension).execute()
+    values = result.get("values", [])
+    if not values:
+        raise Exception("No data in sheet")
+    return values
+
+def get_keys(key_mapper, values):
+
+    if callable(key_mapper):
+        return key_mapper(values)
+    else:
+        return values[0], values[1:]
+
+def sheet2dict(id, range, api_key, rotate=False, key_mapper=None):
+
+    if rotate:
+        majorDimension = 'COLUMNS'
+    else:
+        majorDimension = 'ROWS'
+        
+        
+    values = fetch_sheet(id=id, range=range, api_key=api_key, majorDimension=majorDimension)
+
+    keys, data = get_keys(key_mapper, values)
+
+    dicts = []
+
+    for row in data:
+        if len(row) == 0 or len(str(row[0])) == 0:
+            break
+        x = dict(filter(lambda x: len(str(x[0])) > 0, zip(keys, row)))
+        if 'date' in x:
+            try:
+                x['date'] = serial2date(x['date'])
+            except ParseDateException as e:
+                print("Faield to parse date", x)
+                raise e
+        dicts.append(x)
+
+    return list(filter(lambda val: len(str(val)) > 0, keys)), dicts
+
+def sheet2csv2(id, range, api_key, rotate=False, key_mapper=None, filename="export.csv"):
+
+    fieldnames, csvdata = sheet2dict(id, range, api_key, rotate, key_mapper)
+
+    with open(filename, "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(csvdata)
+
+
 def sheet2csv_rotate(id, range, api_key, key_prefix="", key_cols=[1], filename="export.csv"):
-    # api_key = os.environ["GOOGLE_API_KEY"]
 
     service = build("sheets", "v4", developerKey=api_key)
     sheet = service.spreadsheets()
@@ -67,8 +123,12 @@ def sheet2csv_rotate(id, range, api_key, key_prefix="", key_cols=[1], filename="
         return '.'.join(key_parts)
 
     # fetch all fields
-    for row in values:
-        key_set.add(row2key(row))
+    try:
+        for row in values:
+            key_set.add(row2key(row))
+    except IndexError as e:
+        print("Failed to convert row {} to key", row)
+        raise e
 
     keys = list(key_set)
     keys.sort()
