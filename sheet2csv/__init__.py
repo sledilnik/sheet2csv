@@ -87,22 +87,24 @@ def sheet2dict(id, range, api_key, rotate=False, key_mapper=None, sort_keys=Fals
 
     dicts = []
 
-    for row in data:
+    for i, row in enumerate(data):
         if len(row) == 0 or len(str(row[0])) == 0:
             break
         x = dict(filter(lambda x: len(str(x[0])) > 0, zip(keys, row)))
-        if 'date' in x:
-            try:
-                x['date'] = serial2date(x['date'])
-            except ParseDateException as e:
-                print("Faield to parse date", x)
-                raise e
-        if 'time' in x:
-            try:
-                x['time'] = decimal2time(x['time'])
-            except ParseDateException as e:
-                print("Faield to parse time", x)
-                raise e
+
+        for k, v in x.items():
+            if k.startswith('date'):
+                try:
+                    x[k] = serial2date(v)
+                except ParseDateException as e:
+                    print("Row {}: Failed to parse date in field {}: {}".format(i, k, v))
+                    raise e
+            if k.startswith('time'):
+                try:
+                    x[k] = decimal2time(v)
+                except ParseDateException as e:
+                    print("Row {}: Failed to parse time in field {}: {}".format(i, k, v))
+                    raise e
         dicts.append(x)
 
     keys_sorted = list(filter(lambda val: len(str(val)) > 0, keys))
