@@ -24,18 +24,23 @@ class ParseDateException(Exception):
 
 
 def parse_date(datestr):
+    if not datestr:
+        return None
     try:
         return parser.isoparse(datestr[0:10]).date()
     except Exception as e:
         raise ParseDateException(datestr) from e
 
 def serial2date(datestr):
+    if not datestr:
+        return None
     try:
         datestr = int(datestr)
         d = datetime.datetime(1899, 12, 30)+datetime.timedelta(days=datestr)
         return d.date()
     except Exception as e:
         raise ParseDateException(datestr) from e
+
 
 def decimal2time(timedec):
     if timedec:

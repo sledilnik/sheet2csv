@@ -43,4 +43,6 @@ def test_prod_kraji():
 def test_prod_zdrsistem():
   sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Zdr.sistem!A3:ZZ', api_key=API_KEY, filename='hospitals.csv')
 
+def test_schools():
+  sheet2csv.sheet2csv(id=SHEET_ID_PROD, range="Šole!A3:NN", api_key=API_KEY, filename='schools.csv')
   
