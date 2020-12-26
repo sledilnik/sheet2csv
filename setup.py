@@ -16,14 +16,14 @@ with pathlib.Path('requirements.txt').open() as requirements_txt:
 
 setuptools.setup(
     name="sheet2csv",
-    version="1.0.0",
+    version="1.0.1",
     author="",
     author_email="",
     description="A package to export Google Sheet to CSV via API",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=("tests",)),
     install_requires=install_requires,
     classifiers=[
         "Programming Language :: Python :: 3",

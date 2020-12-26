@@ -31,18 +31,18 @@ def test_sheet_cols():
 def test_sheet_cols_labels():
   values = sheet2csv.sheet2dict(id=SHEET_ID, range='cols_labels!C1:ZZ', api_key=API_KEY, rotate=True)
 
-def test_prod_podatki():
-  sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Podatki!A3:ZZ', api_key=API_KEY, filename='stats.csv')
+# def test_prod_podatki():
+#   sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Podatki!A3:ZZ', api_key=API_KEY, filename='stats.csv')
 
-def test_prod_pacienti():
-  sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Pacienti!A3:ZZ', api_key=API_KEY, filename='patients.csv')
+# def test_prod_pacienti():
+#   sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Pacienti!A3:ZZ', api_key=API_KEY, filename='patients.csv')
 
-def test_prod_kraji():
-  sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Kraji!A1:ZZ', api_key=API_KEY, rotate=True, key_mapper=key_mapper_kraji, filename='regions.csv')
+# def test_prod_kraji():
+#   sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Kraji!A1:ZZ', api_key=API_KEY, rotate=True, key_mapper=key_mapper_kraji, filename='regions.csv')
 
-def test_prod_zdrsistem():
-  sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Zdr.sistem!A3:ZZ', api_key=API_KEY, filename='hospitals.csv')
+# def test_prod_zdrsistem():
+#   sheet2csv.sheet2csv(id=SHEET_ID_PROD, range='Zdr.sistem!A3:ZZ', api_key=API_KEY, filename='hospitals.csv')
 
-def test_schools():
-  sheet2csv.sheet2csv(id=SHEET_ID_PROD, range="Šole!A3:NN", api_key=API_KEY, filename='schools.csv')
+# def test_schools():
+#   sheet2csv.sheet2csv(id=SHEET_ID_PROD, range="Šole!A3:NN", api_key=API_KEY, filename='schools.csv')
   
