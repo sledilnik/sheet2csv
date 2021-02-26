@@ -16,7 +16,7 @@ with pathlib.Path('requirements.txt').open() as requirements_txt:
 
 setuptools.setup(
     name="sheet2csv",
-    version="1.0.1",
+    version="1.0.2",
     author="",
     author_email="",
     description="A package to export Google Sheet to CSV via API",
