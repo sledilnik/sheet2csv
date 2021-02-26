@@ -122,7 +122,7 @@ def sheet2csv(id, range, api_key, rotate=False, key_mapper=None, sort_keys=False
 
     fieldnames, csvdata = sheet2dict(id=id, range=range, api_key=api_key, rotate=rotate, key_mapper=key_mapper, sort_keys=sort_keys)
 
-    with open(filename, "w", newline="") as csvfile:
+    with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(csvdata)
