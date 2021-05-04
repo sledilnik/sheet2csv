@@ -9,13 +9,15 @@ import os
 import os.path
 import sys
 
-name="sheet2csv/sheet2csv"
+name = "sheet2csv/sheet2csv"
 __version__ = "1.0.4"
+
 
 class DuplicateColException(Exception):
     def __init__(self, col):
         message = "Duplicate column: {}".format(col)
         super().__init__(message)
+
 
 class ParseDateException(Exception):
     def __init__(self, datestr):
@@ -31,12 +33,13 @@ def parse_date(datestr):
     except Exception as e:
         raise ParseDateException(datestr) from e
 
+
 def serial2date(datestr):
     if not datestr:
         return None
     try:
         datestr = int(datestr)
-        d = datetime.datetime(1899, 12, 30)+datetime.timedelta(days=datestr)
+        d = datetime.datetime(1899, 12, 30) + datetime.timedelta(days=datestr)
         return d.date()
     except Exception as e:
         raise ParseDateException(datestr) from e
@@ -60,16 +63,26 @@ def find_duplicates(l):
     return set([x for x in l if l.count(x) > 1])
 
 
-def fetch_sheet(id, range, api_key, majorDimension='ROWS'):
+def fetch_sheet(id, range, api_key, majorDimension="ROWS"):
 
     service = build("sheets", "v4", developerKey=api_key)
     sheet = service.spreadsheets()
 
-    result = sheet.values().get(spreadsheetId=id, range=range, valueRenderOption='UNFORMATTED_VALUE', majorDimension=majorDimension).execute()
+    result = (
+        sheet.values()
+        .get(
+            spreadsheetId=id,
+            range=range,
+            valueRenderOption="UNFORMATTED_VALUE",
+            majorDimension=majorDimension,
+        )
+        .execute()
+    )
     values = result.get("values", [])
     if not values:
         raise Exception("No data in sheet")
     return values
+
 
 def get_keys(key_mapper, values):
 
@@ -78,15 +91,17 @@ def get_keys(key_mapper, values):
     else:
         return values[0], values[1:]
 
+
 def sheet2dict(id, range, api_key, rotate=False, key_mapper=None, sort_keys=False):
 
     if rotate:
-        majorDimension = 'COLUMNS'
+        majorDimension = "COLUMNS"
     else:
-        majorDimension = 'ROWS'
-        
-        
-    values = fetch_sheet(id=id, range=range, api_key=api_key, majorDimension=majorDimension)
+        majorDimension = "ROWS"
+
+    values = fetch_sheet(
+        id=id, range=range, api_key=api_key, majorDimension=majorDimension
+    )
 
     keys, data = get_keys(key_mapper, values)
 
@@ -98,17 +113,21 @@ def sheet2dict(id, range, api_key, rotate=False, key_mapper=None, sort_keys=Fals
         x = dict(filter(lambda x: len(str(x[0])) > 0, zip(keys, row)))
 
         for k, v in x.items():
-            if k.startswith('date'):
+            if k.startswith("date"):
                 try:
                     x[k] = serial2date(v)
                 except ParseDateException as e:
-                    print("Row {}: Failed to parse date in field {}: {}".format(i, k, v))
+                    print(
+                        "Row {}: Failed to parse date in field {}: {}".format(i, k, v)
+                    )
                     raise e
-            if k.startswith('time'):
+            if k.startswith("time"):
                 try:
                     x[k] = decimal2time(v)
                 except ParseDateException as e:
-                    print("Row {}: Failed to parse time in field {}: {}".format(i, k, v))
+                    print(
+                        "Row {}: Failed to parse time in field {}: {}".format(i, k, v)
+                    )
                     raise e
         dicts.append(x)
 
@@ -118,12 +137,27 @@ def sheet2dict(id, range, api_key, rotate=False, key_mapper=None, sort_keys=Fals
 
     return keys_sorted, dicts
 
-def sheet2csv(id, range, api_key, rotate=False, key_mapper=None, sort_keys=False, filename="export.csv"):
 
-    fieldnames, csvdata = sheet2dict(id=id, range=range, api_key=api_key, rotate=rotate, key_mapper=key_mapper, sort_keys=sort_keys)
+def sheet2csv(
+    id,
+    range,
+    api_key,
+    rotate=False,
+    key_mapper=None,
+    sort_keys=False,
+    filename="export.csv",
+):
+
+    fieldnames, csvdata = sheet2dict(
+        id=id,
+        range=range,
+        api_key=api_key,
+        rotate=rotate,
+        key_mapper=key_mapper,
+        sort_keys=sort_keys,
+    )
 
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(csvdata)
-
