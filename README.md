@@ -25,8 +25,10 @@ sheet2csv.sheet2csv(
 ```
 
 ## Devlopment
+```
 git clone https://github.com/sledilnik/sheet2csv
 cd sheet2csv
 pipenv install
 pipenv run pip install -e .
 pipenv run test
+```
