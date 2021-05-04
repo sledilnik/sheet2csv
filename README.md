@@ -4,7 +4,7 @@ Python package to transform Google Sheet to CSV.
 
 ## Install
 ```
-pip install git+https://github.com/slo-covid-19/sheet2csv.git
+pip install sheet2csv
 ```
 
 ## Example
@@ -23,3 +23,10 @@ sheet2csv.sheet2csv(
     id=SHEET_ID, range=RANGE_STATS, api_key=GOOGLE_API_KEY, filename="export.csv",
 )
 ```
+
+## Devlopment
+git clone https://github.com/sledilnik/sheet2csv
+cd sheet2csv
+pipenv install
+pipenv run pip install -e .
+pipenv run test

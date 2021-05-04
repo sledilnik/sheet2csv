@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+test = "pytest ."
+
+[packages]
+google-api-python-client = "~=1.12.8"
+google-auth-oauthlib = "~=0.4.1"
+python-dateutil = "~=2.8.1"
+
+[requires]
+python_version = "3"
+
+[dev-packages]
+nose = "~=1.3.7"
+black = "*"
+pytest = "*"
+
+[pipenv]
+allow_prereleases = true

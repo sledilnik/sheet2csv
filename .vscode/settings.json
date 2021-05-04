@@ -1,0 +1,4 @@
+{
+    "python.formatting.provider": "black",
+    "python.pythonPath": "/home/az/.local/share/virtualenvs/sheet2csv-1_hg0e1r/bin/python"
+}
