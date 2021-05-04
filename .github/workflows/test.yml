@@ -26,3 +26,5 @@ jobs:
       run: |
         pipenv run pip install -e .
         pipenv run test
+      env:
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}

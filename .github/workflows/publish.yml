@@ -26,6 +26,8 @@ jobs:
       run: |
         pipenv run pip install -e .
         pipenv run test
+      env:
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
     - name: Build and publish
       env:
         TWINE_USERNAME: '__token__'
