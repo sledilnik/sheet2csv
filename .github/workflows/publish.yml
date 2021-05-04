@@ -23,7 +23,9 @@ jobs:
         pip install setuptools wheel twine pipenv
         pipenv install -d
     - name: Run tests
-      run: pipenv run test
+      run: |
+        pipenv run pip install -e .
+        pipenv run test
     - name: Build and publish
       env:
         TWINE_USERNAME: '__token__'
