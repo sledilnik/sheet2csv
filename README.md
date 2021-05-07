@@ -26,7 +26,7 @@ sheet2csv.sheet2csv(
 )
 ```
 
-## Devlopment
+## Development
 ```
 git clone https://github.com/sledilnik/sheet2csv
 cd sheet2csv
