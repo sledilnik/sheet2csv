@@ -10,7 +10,7 @@ import os.path
 import sys
 
 name = "sheet2csv/sheet2csv"
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 
 
 class DuplicateColException(Exception):
