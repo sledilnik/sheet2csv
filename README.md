@@ -1,6 +1,7 @@
 # sheet2csv
 
 [![PyPI version](https://badge.fury.io/py/sheet2csv.svg)](https://badge.fury.io/py/sheet2csv)
+[![Test](https://github.com/sledilnik/sheet2csv/actions/workflows/test.yml/badge.svg)](https://github.com/sledilnik/sheet2csv/actions/workflows/test.yml)
 
 Python package to transform Google Sheet to CSV.
 
