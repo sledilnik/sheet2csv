@@ -5,7 +5,8 @@
 Python package to transform Google Sheet to CSV.
 
 ## Install
-```
+
+```sh
 pip install sheet2csv
 ```
 
@@ -26,8 +27,9 @@ sheet2csv.sheet2csv(
 )
 ```
 
-## Devlopment
-```
+## Development
+
+```sh
 git clone https://github.com/sledilnik/sheet2csv
 cd sheet2csv
 pipenv install
