@@ -8,7 +8,7 @@ test = "pytest ."
 
 [packages]
 google-api-python-client = "~=2.8.0"
-google-auth-oauthlib = "~=0.4.4"
+google-auth-oauthlib = "~=0.4.6"
 python-dateutil = "~=2.8.1"
 
 [requires]
